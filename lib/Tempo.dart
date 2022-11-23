@@ -1,8 +1,10 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+
+import 'WeatherComponents/Weather.dart';
+// import 'package:google_fonts/google_fonts.dart';
+
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 Future<Weather> fetchWeather() async {
   final response = await http.get(Uri.parse(
@@ -19,105 +21,16 @@ Future<Weather> fetchWeather() async {
   }
 }
 
-class Weather {
-  final int id;
-  final String name;
-  final List<WeatherElement> weatherElement;
-  final Wind wind;
-  final WeatherTemperature weatherTemperature;
-
-  const Weather(
-      {required this.id,
-      required this.name,
-      required this.weatherElement,
-      required this.wind,
-      required this.weatherTemperature});
-
-  factory Weather.fromJson(Map<String, dynamic> json) {
-    return Weather(
-      id: json['id'],
-      name: json['name'],
-      weatherElement: List<WeatherElement>.from(
-          json["weather"].map((x) => WeatherElement.fromJson(x))),
-      wind: Wind.fromJson(json["wind"]),
-      weatherTemperature: WeatherTemperature.fromJson(json["main"]),
-    );
-  }
-}
-
-class WeatherElement {
-  WeatherElement(
-      {required this.mainWeather,
-      required this.weatherDescription,
-      required this.weatherIcon});
-
-  String mainWeather;
-  String weatherDescription;
-  String weatherIcon;
-
-  factory WeatherElement.fromJson(Map<String, dynamic> json) => WeatherElement(
-      mainWeather: json["main"],
-      weatherDescription: json["description"],
-      weatherIcon: json["icon"]);
-
-  Map<String, dynamic> toJson() => {
-        "main": mainWeather,
-        "description": weatherDescription,
-        "icon": weatherIcon
-      };
-}
-
-class Wind {
-  Wind({
-    required this.speed,
-  });
-
-  double speed;
-
-  factory Wind.fromJson(Map<String, dynamic> json) => Wind(
-        speed: json["speed"].toDouble(),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "speed": speed,
-      };
-}
-
-class WeatherTemperature {
-  WeatherTemperature({
-    required this.mainTemp,
-    required this.tempMin,
-    required this.tempMax,
-    required this.humidity,
-  });
-
-  double mainTemp;
-  double tempMin;
-  double tempMax;
-  int humidity;
-
-  factory WeatherTemperature.fromJson(Map<String, dynamic> json) =>
-      WeatherTemperature(
-        mainTemp: json["temp"].toDouble(),
-        tempMin: json["temp_min"].toDouble(),
-        tempMax: json["temp_max"].toDouble(),
-        humidity: json["humidity"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "temp": mainTemp,
-        "temp_min": tempMin,
-        "temp_max": tempMax,
-        "humidity": humidity,
-      };
-}
-
 class Tempo extends StatefulWidget {
+  const Tempo({Key? key}) : super(key: key);
+
   @override
   _TempoState createState() => _TempoState();
 }
 
 class _TempoState extends State<Tempo> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   late Future<Weather> futureWeather;
 
   @override
@@ -129,60 +42,116 @@ class _TempoState extends State<Tempo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         title: const Text('Fetch Data Example'),
       ),
-      body: Center(
-        child: FutureBuilder<Weather>(
-          future: futureWeather,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                ),
-                child: SizedBox(
-                  width: 700,
-                  height: 300,
-                  child: Center(
-                      child: Column(
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Align(
+            alignment: const AlignmentDirectional(0, 0),
+            child: FutureBuilder<Weather>(
+              future: futureWeather,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Cidade: ${snapshot.data!.name}"),
                       Text(
-                          "Clima: ${snapshot.data!.weatherElement[0].mainWeather}"),
-                      Text(
-                          "Descrição: ${snapshot.data!.weatherElement[0].weatherDescription}"),
-                      Text(
-                          "Temperatura atual: ${snapshot.data!.weatherTemperature.mainTemp} °C"),
-                      Text(
-                          "Temperatura mínima: ${snapshot.data!.weatherTemperature.tempMin} °C"),
-                      Text(
-                          "Temperatura máxima: ${snapshot.data!.weatherTemperature.tempMax} °C"),
-                      Text(
-                          "Humidade: ${snapshot.data!.weatherTemperature.humidity}"),
-                      Text("Vento: ${snapshot.data!.wind.speed} KM/h"),
-                      FutureBuilder(
-                          future: futureWeather,
-                          builder: (context, snapshot) {
-                            return Image.network(
-                                "https://openweathermap.org/img/wn/${snapshot.data!.weatherElement[0].weatherIcon}.png");
-                          })
+                        snapshot.data!.name,
+                        // style: FlutterFlowTheme.of(context).title1,
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(0, 0),
+                        child: SizedBox(
+                          width: 400,
+                          height: 200,
+                          child: Align(
+                            alignment: const AlignmentDirectional(0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Align(
+                                  alignment: const AlignmentDirectional(0, 0),
+                                  child: Text(
+                                    snapshot.data!.weatherElement[0]
+                                        .weatherDescription,
+                                    // style:
+                                    //     FlutterFlowTheme.of(context).subtitle1,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 120,
+                                      height: 120,
+                                      child: Image.network(
+                                        'https://openweathermap.org/img/wn/${snapshot.data!.weatherElement[0].weatherIcon}@2x.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          '${snapshot.data!.weatherTemperature.mainTemp} °C',
+                                          // style: FlutterFlowTheme.of(context)
+                                          //     .bodyText1,
+                                        ),
+                                        Text(
+                                          'max: ${snapshot.data!.weatherTemperature.tempMax} °C',
+                                          // style: FlutterFlowTheme.of(context)
+                                          //     .bodyText1,
+                                        ),
+                                        Text(
+                                          'min: ${snapshot.data!.weatherTemperature.tempMin} °C',
+                                          // style: FlutterFlowTheme.of(context)
+                                          //     .bodyText1,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(
+                                          'Humidade: ${snapshot.data!.weatherTemperature.humidity}',
+                                          // style: FlutterFlowTheme.of(context)
+                                          //     .bodyText1,
+                                        ),
+                                        Text(
+                                          'Vento: ${snapshot.data!.wind.speed} KM/h',
+                                          // style: FlutterFlowTheme.of(context)
+                                          //     .bodyText1,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
-                  )),
-                ),
-              );
-              // return Text(snapshot.data!.name);
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                }
 
-            // By default, show a loading spinner.
-            return const CircularProgressIndicator();
-          },
+                // By default, show a loading spinner.
+                return const CircularProgressIndicator();
+              },
+            ),
+          ),
         ),
       ),
     );

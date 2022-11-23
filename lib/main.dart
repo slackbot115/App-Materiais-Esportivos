@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:materiais_esportivos_app/EquipamentoModel.dart';
-import 'package:materiais_esportivos_app/EquipamentosTela.dart';
+import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentoModel.dart';
+import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentosTela.dart';
 
 import 'HomePage.dart';
 import 'Tempo.dart';
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => const HomePage(),
         "/EquipamentoTela": (context) => EquipamentoTela(),
+        "/Tempo": (context) => const Tempo(),
       },
     );
   }

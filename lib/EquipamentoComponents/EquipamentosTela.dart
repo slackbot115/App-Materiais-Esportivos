@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:materiais_esportivos_app/EquipamentoModel.dart';
+import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentoModel.dart';
 
 import 'EquipamentoList.dart';
 import 'EquipamentoUpdate.dart';

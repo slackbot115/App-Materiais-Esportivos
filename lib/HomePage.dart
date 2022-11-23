@@ -28,14 +28,16 @@ class HomePage extends StatelessWidget {
                 accountEmail: Text("accountEmail"),
               ),
               ListTile(
-                title: const Text('Tempo'),
+                title: const Text('Equipamentos'),
                 onTap: () {
                   Navigator.of(context).pushNamed("/EquipamentoTela");
                 },
               ),
               ListTile(
-                title: const Text('Página 2'),
-                onTap: () {},
+                title: const Text('Tempo'),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/Tempo");
+                },
               ),
               ListTile(
                 title: const Text('Página 3'),

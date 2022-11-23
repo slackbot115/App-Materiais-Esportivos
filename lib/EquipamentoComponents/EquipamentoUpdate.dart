@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-import 'package:materiais_esportivos_app/EquipamentoModel.dart';
+import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentoModel.dart';
 
 Future<EquipamentoModel> updateEquipamento(
     EquipamentoModel equipamentoModel, int? valorQuantidade) async {
