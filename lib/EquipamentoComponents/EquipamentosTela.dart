@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentoModel.dart';
+import 'package:materiais_esportivos_app/HomePage.dart';
+import 'package:materiais_esportivos_app/main.dart';
 
 import 'EquipamentoList.dart';
 import 'EquipamentoUpdate.dart';
@@ -26,7 +28,7 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Mostrar Pragas',
+      title: 'Mostrar Equipamentos',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
@@ -35,7 +37,10 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
           actions: [],
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyApp()),
+            ),
           ),
           title: const Text('Lista de Pragas'),
         ),
