@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentoModel.dart';
-import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentosTela.dart';
 import 'package:materiais_esportivos_app/ReservasComponents/ReservaTela.dart';
+
+import 'EquipamentoComponents/Telas/EquipamentosTela.dart';
 import 'HomePage.dart';
-import 'Tempo.dart';
+import 'WeatherComponents/Clima.dart';
 
 void main() => runApp(const MyApp());
 
@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (context) => const HomePage(),
         "/EquipamentoTela": (context) => EquipamentoTela(),
-        "/Tempo": (context) => const Tempo(),
         "/Reserva": (context) => ReservaTela(),
+        "/ClimaTela": (context) => const ClimaTela(),
       },
     );
   }

@@ -1,14 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:materiais_esportivos_app/EquipamentoComponents/EquipamentoModel.dart';
-import 'package:materiais_esportivos_app/HomePage.dart';
+import 'package:materiais_esportivos_app/EquipamentoComponents/Telas/EquipamentoTelaAdicionar.dart';
 import 'package:materiais_esportivos_app/main.dart';
 
-import 'EquipamentoList.dart';
-import 'EquipamentoUpdate.dart';
+import '../Operacoes/EquipamentoList.dart';
+import '../Operacoes/EquipamentoModel.dart';
+import '../Operacoes/EquipamentoUpdate.dart';
 
 class EquipamentoTela extends StatefulWidget {
   @override
@@ -34,15 +32,22 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          actions: [],
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MyApp()),
+              MaterialPageRoute(builder: (context) => const MyApp()),
             ),
           ),
-          title: const Text('Lista de Pragas'),
+          title: const Text('Lista de Equipamentos Esportivos'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EquipamentoTelaAdicionar()),
+          ),
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.add),
         ),
         body: Center(
           child: FutureBuilder<List<EquipamentoModel>>(
@@ -59,13 +64,13 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
                           spacing: 12,
                           children: [
                             IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.remove,
                                   size: 30,
                                 ),
                                 onPressed: () async => {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
+                                          .showSnackBar(const SnackBar(
                                         content: Text(
                                           "Espere a página recarregar",
                                           style: TextStyle(fontSize: 18),
@@ -87,13 +92,13 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
                                               )),
                                     }),
                             IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.add,
                                   size: 30,
                                 ),
                                 onPressed: () async => {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
+                                          .showSnackBar(const SnackBar(
                                         content: Text(
                                           "Espere a página recarregar",
                                           style: TextStyle(fontSize: 18),
@@ -116,7 +121,8 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
                                     })
                           ],
                         ),
-                        title: Text("${equipamentos[index].nome}"),
+                        title: Text(
+                            "${equipamentos[index].nome} - ${equipamentos[index].tipo}"),
                         subtitle: Text(
                             "Quantidade disponível: ${equipamentos[index].quantidadeDisponivel}/${equipamentos[index].quantidadeTotal}"),
                       );
