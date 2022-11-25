@@ -6,13 +6,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fetch Data Example',
+      title: 'Trabalho de Sistemas Distribuídos',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Fetch Data Example'),
+          title: const Text('Trabalho de Sistemas Distribuídos'),
         ),
         drawer: Theme(
           data: Theme.of(context).copyWith(
@@ -34,9 +34,9 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ListTile(
-                title: const Text('Tempo'),
+                title: const Text('Clima'),
                 onTap: () {
-                  Navigator.of(context).pushNamed("/Tempo");
+                  Navigator.of(context).pushNamed("/ClimaTela");
                 },
               ),
               ListTile(
