@@ -40,8 +40,11 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ListTile(
-                title: const Text('Página 3'),
-                onTap: () {},
+                title: const Text('Reservas'),
+                onTap: () {
+                  Navigator.of(context).pushNamed("/Reserva");
+
+                },
               ),
             ]),
           ),
