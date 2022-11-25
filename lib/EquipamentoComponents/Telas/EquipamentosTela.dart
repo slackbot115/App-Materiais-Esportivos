@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:materiais_esportivos_app/EquipamentoComponents/Telas/EquipamentoTelaAdicionar.dart';
+import 'package:materiais_esportivos_app/EquipamentoComponents/Telas/EquipamentoTelaEditar.dart';
 import 'package:materiais_esportivos_app/main.dart';
 
 import '../Operacoes/EquipamentoList.dart';
@@ -76,7 +77,7 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
                                           style: TextStyle(fontSize: 18),
                                         ),
                                       )),
-                                      await updateEquipamento(
+                                      await updateQuantidadeEquipamento(
                                               equipamentos[index], -1)
                                           .whenComplete(() => setState(
                                                 () => {
@@ -104,7 +105,7 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
                                           style: TextStyle(fontSize: 18),
                                         ),
                                       )),
-                                      await updateEquipamento(
+                                      await updateQuantidadeEquipamento(
                                               equipamentos[index], 1)
                                           .whenComplete(() => setState(
                                                 () => {
@@ -118,7 +119,19 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
                                                   ),
                                                 },
                                               )),
-                                    })
+                                    }),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.edit,
+                                size: 30,
+                              ),
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EquipamentoTelaEditar(
+                                        equipamentos[index])),
+                              ),
+                            ),
                           ],
                         ),
                         title: Text(

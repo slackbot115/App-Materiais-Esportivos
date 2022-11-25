@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:materiais_esportivos_app/EquipamentoComponents/Operacoes/EquipamentoCreate.dart';
+import 'package:materiais_esportivos_app/EquipamentoComponents/Operacoes/EquipamentoUpdate.dart';
 
 import '../Operacoes/EquipamentoModel.dart';
 import 'EquipamentosTela.dart';
 
-class EquipamentoTelaAdicionar extends StatefulWidget {
+class EquipamentoTelaEditar extends StatefulWidget {
+  EquipamentoModel equipamentoSelecionado;
+
+  EquipamentoTelaEditar(this.equipamentoSelecionado, {super.key});
+
   @override
-  _EquipamentoTelaAdicionarState createState() =>
-      _EquipamentoTelaAdicionarState();
+  _EquipamentoTelaEditarState createState() => _EquipamentoTelaEditarState();
 }
 
-class _EquipamentoTelaAdicionarState extends State<EquipamentoTelaAdicionar> {
+class _EquipamentoTelaEditarState extends State<EquipamentoTelaEditar> {
+  var nomeEquipamentoController = TextEditingController();
+  var tipoEquipamentoController = TextEditingController();
+  var quantidadeTotalEquipamentoController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    nomeEquipamentoController.text = widget.equipamentoSelecionado.nome!;
+    tipoEquipamentoController.text = widget.equipamentoSelecionado.tipo!;
+    quantidadeTotalEquipamentoController.text =
+        widget.equipamentoSelecionado.quantidadeTotal!.toString();
   }
-
-  final nomeEquipamentoController = TextEditingController();
-  final tipoEquipamentoController = TextEditingController();
-  final quantidadeTotalEquipamentoController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -99,12 +107,15 @@ class _EquipamentoTelaAdicionarState extends State<EquipamentoTelaAdicionar> {
                     onPressed: () {
                       // Validate returns true if the form is valid, or false otherwise.
                       if (_formKey.currentState!.validate()) {
-                        createEquipamento(EquipamentoModel(
-                            nome: nomeEquipamentoController.text,
-                            tipo: tipoEquipamentoController.text,
-                            quantidadeTotal: int.parse(
-                                quantidadeTotalEquipamentoController.text)));
+                        widget.equipamentoSelecionado.nome =
+                            nomeEquipamentoController.text;
+                        widget.equipamentoSelecionado.tipo =
+                            tipoEquipamentoController.text;
+                        widget.equipamentoSelecionado.quantidadeTotal =
+                            int.parse(
+                                quantidadeTotalEquipamentoController.text);
 
+                        updateEquipamento(widget.equipamentoSelecionado);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
