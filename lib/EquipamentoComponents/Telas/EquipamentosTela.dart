@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:materiais_esportivos_app/EquipamentoComponents/Telas/EquipamentoTelaAdicionar.dart';
 import 'package:materiais_esportivos_app/main.dart';
 
+import '../Operacoes/EquipamentoDelete.dart';
 import '../Operacoes/EquipamentoList.dart';
 import '../Operacoes/EquipamentoModel.dart';
 import '../Operacoes/EquipamentoUpdate.dart';
@@ -63,6 +64,34 @@ class _EquipamentoTelaState extends State<EquipamentoTela> {
                         trailing: Wrap(
                           spacing: 12,
                           children: [
+                            IconButton(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  size: 30,
+                                ),
+                                onPressed: () async => {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                        content: Text(
+                                          "Espere a página recarregar",
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      )),
+                                      await deleteEquipamento(
+                                              equipamentos[index].id)
+                                          .whenComplete(() => setState(
+                                                () => {
+                                                  Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EquipamentoTela()), // this mymainpage is your page to refresh
+                                                    (Route<dynamic> route) =>
+                                                        false,
+                                                  ),
+                                                },
+                                              )),
+                                    }),
                             IconButton(
                                 icon: const Icon(
                                   Icons.remove,
